@@ -1,1 +1,38 @@
-<router-outlet></router-outlet>
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-title">TEAM PULSE</span>
+      <span class="brand-subtitle">Gerenciamento inteligente de equipes</span>
+    </div>
+
+    <nav class="sidebar-menu">
+      <a class="menu-item" href="#">
+        Dashboard
+      </a>
+
+      <a class="menu-item" href="#">
+        Colaboradores
+      </a>
+
+      <a class="menu-item" href="#">
+        Equipes
+      </a>
+
+      <div class="menu-section">
+        <span class="menu-section-title">Férias</span>
+
+        <a class="submenu-item" href="#">
+          Lista de férias
+        </a>
+
+        <a class="submenu-item" href="#">
+          Nova férias
+        </a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

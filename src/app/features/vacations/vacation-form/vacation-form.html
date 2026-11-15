@@ -1,58 +1,127 @@
-<section class="vacation-form">
+<section class="vacation-form-page">
 
-  <h2>Cadastrar Férias</h2>
+  <div class="page-header">
+    <div>
+      <span class="eyebrow">FÉRIAS</span>
+      <h1>Nova solicitação de férias</h1>
+      <p>Defina o período de férias do colaborador.</p>
+    </div>
+  </div>
 
-  <form (ngSubmit)="saveVacation()">
+  <div class="vacation-card">
 
     <div class="form-group">
-      <label for="employeeName">Colaborador</label>
+      <label for="employee">Colaborador</label>
 
       <input
+        id="employee"
         type="text"
-        id="employeeName"
-        name="employeeName"
         [(ngModel)]="employeeName"
         placeholder="Digite o nome do colaborador"
-      >
+      />
     </div>
 
     <div class="form-group">
-      <label for="startDate">Início das férias</label>
+      <label for="startDate">Data de início</label>
 
       <input
-        type="date"
         id="startDate"
-        name="startDate"
+        type="date"
         [(ngModel)]="startDate"
-      >
+        (change)="calculateDates()"
+      />
     </div>
 
     <div class="form-group">
-      <label for="endDate">Fim das férias</label>
+      <label>Quantidade de dias</label>
 
-      <input
-        type="date"
-        id="endDate"
-        name="endDate"
-        [(ngModel)]="endDate"
-      >
+      <div class="days-options">
+
+        <button
+          type="button"
+          [class.active]="vacationDays === 10"
+          (click)="selectDays(10)"
+        >
+          10 dias
+        </button>
+
+        <button
+          type="button"
+          [class.active]="vacationDays === 15"
+          (click)="selectDays(15)"
+        >
+          15 dias
+        </button>
+
+        <button
+          type="button"
+          [class.active]="vacationDays === 20"
+          (click)="selectDays(20)"
+        >
+          20 dias
+        </button>
+
+        <button
+          type="button"
+          [class.active]="vacationDays === 30"
+          (click)="selectDays(30)"
+        >
+          30 dias
+        </button>
+
+      </div>
     </div>
 
     <div class="form-group">
-      <label for="returnDate">Data de retorno</label>
+      <label for="customDays">Outra quantidade de dias</label>
 
       <input
-        type="date"
-        id="returnDate"
-        name="returnDate"
-        [(ngModel)]="returnDate"
-      >
+        id="customDays"
+        type="number"
+        min="1"
+        [(ngModel)]="vacationDays"
+        (input)="calculateDates()"
+        placeholder="Digite a quantidade"
+      />
     </div>
 
-    <button type="submit">
-      Salvar férias
-    </button>
+    <div class="result-container">
 
-  </form>
+      <div class="result-card">
+        <span>FINAL DAS FÉRIAS</span>
+        <strong>
+          {{ finalDate || '--/--/----' }}
+        </strong>
+      </div>
+
+      <div class="result-card">
+        <span>RETORNO AO TRABALHO</span>
+        <strong class="return-date">
+          {{ returnDate || '--/--/----' }}
+        </strong>
+      </div>
+
+    </div>
+
+    <div class="actions">
+
+      <button
+        type="button"
+        class="cancel-button"
+      >
+        Cancelar
+      </button>
+
+      <button
+        type="button"
+        class="save-button"
+        (click)="saveVacation()"
+      >
+        Salvar férias
+      </button>
+
+    </div>
+
+  </div>
 
 </section>
