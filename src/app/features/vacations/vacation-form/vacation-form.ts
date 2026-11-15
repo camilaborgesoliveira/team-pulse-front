@@ -1,12 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+
+import {
+  Router,
+  RouterLink
+} from '@angular/router';
+
 import { finalize } from 'rxjs';
 
 import {
@@ -45,6 +51,7 @@ export class VacationForm implements OnInit {
   ) {
 
     this.vacationForm = this.formBuilder.group({
+
       employeeName: [
         '',
         [
@@ -59,24 +66,26 @@ export class VacationForm implements OnInit {
       ],
 
       vacationDays: [
-        30,
-        Validators.required
+        30
       ],
 
       additionalDays: [
         0,
         [
-          Validators.required,
           Validators.min(0)
         ]
       ]
+
     });
+
   }
 
   ngOnInit(): void {
 
     this.vacationForm.valueChanges.subscribe(() => {
-      // Atualiza automaticamente o resumo das férias
+
+      this.errorMessage = '';
+
     });
 
   }
@@ -92,16 +101,17 @@ export class VacationForm implements OnInit {
   get selectedVacationDays(): number {
 
     return Number(
-      this.vacationForm.get('vacationDays')?.value || 0
+      this.vacationForm.get('vacationDays')?.value ?? 0
     );
 
   }
 
   get additionalDays(): number {
 
-    return Number(
-      this.vacationForm.get('additionalDays')?.value || 0
-    );
+    const value =
+      this.vacationForm.get('additionalDays')?.value;
+
+    return Number(value ?? 0);
 
   }
 
@@ -127,6 +137,16 @@ export class VacationForm implements OnInit {
       `${startDate}T12:00:00`
     );
 
+    /*
+     * Exemplo:
+     *
+     * Início: 05/11
+     * 10 dias
+     *
+     * Último dia:
+     * 14/11
+     */
+
     date.setDate(
       date.getDate() + this.totalDays - 1
     );
@@ -148,6 +168,11 @@ export class VacationForm implements OnInit {
       `${startDate}T12:00:00`
     );
 
+    /*
+     * O retorno acontece
+     * no dia seguinte ao último dia de férias.
+     */
+
     date.setDate(
       date.getDate() + this.totalDays
     );
@@ -156,7 +181,9 @@ export class VacationForm implements OnInit {
 
   }
 
-  private formatDateForDisplay(date: Date): string {
+  private formatDateForDisplay(
+    date: Date
+  ): string {
 
     return date.toLocaleDateString(
       'pt-BR'
@@ -172,15 +199,79 @@ export class VacationForm implements OnInit {
 
     this.errorMessage = '';
 
-    if (this.vacationForm.invalid) {
+    /*
+     * Pegamos os campos obrigatórios
+     * diretamente para validar.
+     */
 
-      this.vacationForm.markAllAsTouched();
+    const employeeNameControl =
+      this.vacationForm.get('employeeName');
+
+    const startDateControl =
+      this.vacationForm.get('startDate');
+
+    /*
+     * Validação do nome.
+     */
+
+    if (
+      !employeeNameControl ||
+      employeeNameControl.invalid
+    ) {
+
+      employeeNameControl?.markAsTouched();
 
       this.errorMessage =
-        'Preencha todos os campos obrigatórios corretamente.';
+        'Informe corretamente o nome do colaborador.';
 
       return;
     }
+
+    /*
+     * Validação da data.
+     */
+
+    if (
+      !startDateControl ||
+      startDateControl.invalid
+    ) {
+
+      startDateControl?.markAsTouched();
+
+      this.errorMessage =
+        'Informe a data de início das férias.';
+
+      return;
+    }
+
+    /*
+     * Validação dos dias.
+     */
+
+    if (this.selectedVacationDays <= 0) {
+
+      this.errorMessage =
+        'Selecione a quantidade de dias das férias.';
+
+      return;
+    }
+
+    /*
+     * Dias adicionais não podem
+     * ser negativos.
+     */
+
+    if (this.additionalDays < 0) {
+
+      this.errorMessage =
+        'Os dias adicionais não podem ser negativos.';
+
+      return;
+    }
+
+    /*
+     * Segurança adicional.
+     */
 
     if (this.totalDays <= 0) {
 
@@ -196,17 +287,21 @@ export class VacationForm implements OnInit {
       this.vacationForm.getRawValue();
 
     /*
-     * O backend atual recebe apenas:
+     * O backend recebe:
      *
      * employeeName
      * startDate
      * vacationDays
      *
-     * Por isso enviamos o TOTAL:
+     * Enviamos vacationDays com o total:
      *
-     * período escolhido + dias adicionais
+     * período escolhido
+     * +
+     * dias adicionais
      */
+
     const request: VacationRequest = {
+
       employeeName:
         formValue.employeeName.trim(),
 
@@ -215,6 +310,7 @@ export class VacationForm implements OnInit {
 
       vacationDays:
       this.totalDays
+
     };
 
     console.log(
@@ -226,30 +322,24 @@ export class VacationForm implements OnInit {
       .createVacation(request)
       .pipe(
 
-        /*
-         * Sempre encerra o loading,
-         * seja sucesso ou erro.
-         */
         finalize(() => {
+
           this.isLoading = false;
+
         })
 
       )
       .subscribe({
 
-        next: (response: VacationResponse) => {
+        next: (
+          response: VacationResponse
+        ) => {
 
           console.log(
             'Férias cadastradas com sucesso:',
             response
           );
 
-          /*
-           * Redireciona para a lista.
-           *
-           * Quando VacationList for iniciado,
-           * ele executará loadVacations().
-           */
           this.router.navigate([
             '/vacations'
           ]);
@@ -265,6 +355,7 @@ export class VacationForm implements OnInit {
 
           this.errorMessage =
             'Não foi possível cadastrar as férias. Tente novamente.';
+
         }
 
       });
@@ -283,7 +374,9 @@ export class VacationForm implements OnInit {
 
   }
 
-  hasError(controlName: string): boolean {
+  hasError(
+    controlName: string
+  ): boolean {
 
     const control =
       this.vacationForm.get(controlName);
