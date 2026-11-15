@@ -1,27 +1,73 @@
-<section class="vacation-list">
+<section class="vacation-page">
 
-  <h2>Férias da Equipe</h2>
+  <div class="page-header">
+    <div>
+      <span class="eyebrow">TEAM PULSE</span>
+      <h1>Gestão de Férias</h1>
+      <p>Acompanhe e gerencie as férias da sua equipe.</p>
+    </div>
 
-  <table>
+    <button class="primary-button">
+      + Nova férias
+    </button>
+  </div>
 
-    <thead>
-    <tr>
-      <th>Colaborador</th>
-      <th>Início das férias</th>
-      <th>Retorno</th>
-    </tr>
-    </thead>
+  <div class="vacation-card">
 
-    <tbody>
+    <div class="card-header">
+      <h2>Férias programadas</h2>
 
-    <tr *ngFor="let vacation of vacations">
-      <td>{{ vacation.employeeName }}</td>
-      <td>{{ vacation.startDate }}</td>
-      <td>{{ vacation.endDate }}</td>
-    </tr>
+      <span class="vacation-count">
+        {{ vacations.length }} registros
+      </span>
+    </div>
 
-    </tbody>
+    <div class="table-wrapper">
 
-  </table>
+      <table>
+
+        <thead>
+        <tr>
+          <th>Colaborador</th>
+          <th>Início</th>
+          <th>Dias</th>
+          <th>Final das férias</th>
+          <th>Retorno</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr *ngFor="let vacation of vacations">
+
+          <td class="employee-name">
+            {{ vacation.employeeName }}
+          </td>
+
+          <td>{{ vacation.startDate }}</td>
+
+          <td>
+              <span class="days-badge">
+                {{ vacation.days }} dias
+              </span>
+          </td>
+
+          <td>{{ vacation.endDate }}</td>
+
+          <td>
+              <span class="return-date">
+                {{ vacation.returnDate }}
+              </span>
+          </td>
+
+        </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
 
 </section>
