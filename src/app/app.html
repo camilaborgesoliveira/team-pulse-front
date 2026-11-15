@@ -33,7 +33,6 @@
           🌴 <span>Férias</span>
         </div>
 
-
         <div class="submenu">
 
           <a
@@ -44,7 +43,6 @@
             📋 Lista de férias
 
           </a>
-
 
           <a
             routerLink="/vacations/new"
@@ -66,7 +64,6 @@
           📅 <span>Ausências</span>
         </div>
 
-
         <div class="submenu">
 
           <a
@@ -78,12 +75,42 @@
 
           </a>
 
-
           <a
             routerLink="/time-off/new"
             routerLinkActive="active">
 
             ➕ Nova ausência
+
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- FEEDBACKS -->
+      <div class="menu-group">
+
+        <div class="menu-parent">
+          💬 <span>Feedbacks</span>
+        </div>
+
+        <div class="submenu">
+
+          <a
+            routerLink="/feedback"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+
+            📋 Lista de feedbacks
+
+          </a>
+
+          <a
+            routerLink="/feedback/new"
+            routerLinkActive="active">
+
+            ➕ Novo feedback
 
           </a>
 
@@ -106,7 +133,7 @@
   </aside>
 
 
-  <!-- CONTEÚDO -->
+  <!-- CONTEÚDO PRINCIPAL -->
   <main class="content">
 
     <router-outlet></router-outlet>

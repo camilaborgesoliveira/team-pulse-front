@@ -1,0 +1,188 @@
+<div class="feedback-list-page">
+
+  <!-- CABEÇALHO -->
+  <div class="page-header">
+
+    <div>
+      <span class="section-label">
+        TEAM PULSE
+      </span>
+
+      <h1>
+        Feedbacks 1:1
+      </h1>
+
+      <p>
+        Acompanhe os feedbacks e a evolução dos colaboradores.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="new-button"
+      (click)="newFeedback()">
+
+      + Novo feedback
+
+    </button>
+
+  </div>
+
+
+  <!-- LOADING -->
+  <div
+    *ngIf="isLoading"
+    class="loading-state">
+
+    Carregando feedbacks...
+
+  </div>
+
+
+  <!-- LISTA -->
+  <div
+    *ngIf="!isLoading && feedbacks.length > 0"
+    class="feedbacks-container">
+
+    <div
+      *ngFor="let feedback of feedbacks"
+      class="feedback-card">
+
+
+      <!-- CABEÇALHO DO CARD -->
+      <div class="feedback-card-header">
+
+        <div>
+
+          <h2>
+            {{ feedback.employeeName }}
+          </h2>
+
+          <span class="feedback-date">
+            {{ feedback.feedbackDate }}
+          </span>
+
+        </div>
+
+
+        <div class="score-badge">
+
+          <span>
+            Nota
+          </span>
+
+          <strong>
+            {{ feedback.score }}/10
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- CONTEÚDO -->
+      <div class="feedback-content">
+
+
+        <div class="feedback-section positive">
+
+          <h3>
+            ✓ Pontos positivos
+          </h3>
+
+          <p>
+            {{ feedback.positivePoints }}
+          </p>
+
+        </div>
+
+
+        <div class="feedback-section improvement">
+
+          <h3>
+            ↗ Pontos de melhoria
+          </h3>
+
+          <p>
+            {{ feedback.improvementPoints }}
+          </p>
+
+        </div>
+
+
+        <div class="feedback-section">
+
+          <h3>
+            💬 O que foi conversado
+          </h3>
+
+          <p>
+            {{ feedback.discussionNotes }}
+          </p>
+
+        </div>
+
+
+        <div class="feedback-section next-feedback">
+
+          <h3>
+            → Próximo feedback
+          </h3>
+
+          <p>
+            {{ feedback.nextFeedbackNotes }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- AÇÕES -->
+      <div class="feedback-actions">
+
+        <button
+          type="button"
+          class="history-button"
+          (click)="viewHistory(feedback.employeeName)">
+
+          📈 Ver histórico e evolução
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ESTADO VAZIO -->
+  <div
+    *ngIf="!isLoading && feedbacks.length === 0"
+    class="empty-state">
+
+    <div class="empty-icon">
+      💬
+    </div>
+
+    <h2>
+      Nenhum feedback encontrado
+    </h2>
+
+    <p>
+      Comece registrando o primeiro feedback 1:1 da equipe.
+    </p>
+
+    <button
+      type="button"
+      class="new-button"
+      (click)="newFeedback()">
+
+      + Novo feedback
+
+    </button>
+
+  </div>
+
+</div>

@@ -1,0 +1,181 @@
+<div class="feedback-history-page">
+
+  <!-- CABEÇALHO -->
+
+  <div class="page-header">
+
+    <div>
+
+      <span class="section-label">
+        TEAM PULSE
+      </span>
+
+      <h1>
+        Histórico de Feedbacks
+      </h1>
+
+      <p>
+        Acompanhe a evolução e os registros de
+        <strong>{{ employeeName }}</strong>.
+      </p>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="back-button"
+      (click)="goBack()">
+
+      ← Voltar
+
+    </button>
+
+  </div>
+
+
+  <!-- CARREGAMENTO -->
+
+  <div
+    *ngIf="isLoading"
+    class="loading-state">
+
+    Carregando histórico...
+
+  </div>
+
+
+  <!-- ERRO -->
+
+  <div
+    *ngIf="!isLoading && errorMessage"
+    class="error-state">
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- HISTÓRICO -->
+
+  <div
+    *ngIf="
+      !isLoading &&
+      !errorMessage &&
+      feedbacks.length > 0
+    "
+    class="history-container">
+
+
+    <div
+      *ngFor="let feedback of feedbacks"
+      class="history-card">
+
+
+      <div class="history-card-header">
+
+        <div>
+
+          <span class="history-date">
+            {{ feedback.feedbackDate }}
+          </span>
+
+          <h2>
+            Feedback 1:1
+          </h2>
+
+        </div>
+
+
+        <div class="score-badge">
+
+          <span>
+            Nota
+          </span>
+
+          <strong>
+            {{ feedback.score }}/10
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="history-content">
+
+
+        <div class="history-section positive">
+
+          <h3>
+            ✓ Pontos positivos
+          </h3>
+
+          <p>
+            {{ feedback.positivePoints }}
+          </p>
+
+        </div>
+
+
+        <div class="history-section improvement">
+
+          <h3>
+            ↗ Pontos de melhoria
+          </h3>
+
+          <p>
+            {{ feedback.improvementPoints }}
+          </p>
+
+        </div>
+
+
+        <div class="history-section">
+
+          <h3>
+            💬 O que foi conversado
+          </h3>
+
+          <p>
+            {{ feedback.discussionNotes }}
+          </p>
+
+        </div>
+
+
+        <div class="history-section next-feedback">
+
+          <h3>
+            → Pontos para o próximo feedback
+          </h3>
+
+          <p>
+            {{ feedback.nextFeedbackNotes }}
+          </p>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- VAZIO -->
+
+  <div
+    *ngIf="
+      !isLoading &&
+      !errorMessage &&
+      feedbacks.length === 0
+    "
+    class="empty-state">
+
+    Nenhum feedback encontrado para este colaborador.
+
+  </div>
+
+</div>
