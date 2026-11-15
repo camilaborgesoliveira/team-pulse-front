@@ -1,127 +1,352 @@
-<section class="vacation-form-page">
+<div class="page">
+
+  <!-- CABEÇALHO -->
 
   <div class="page-header">
+
     <div>
-      <span class="eyebrow">FÉRIAS</span>
-      <h1>Nova solicitação de férias</h1>
-      <p>Defina o período de férias do colaborador.</p>
-    </div>
-  </div>
 
-  <div class="vacation-card">
+      <span class="eyebrow">
+        🌴 GESTÃO DE PESSOAS
+      </span>
 
-    <div class="form-group">
-      <label for="employee">Colaborador</label>
+      <h1>
+        Nova férias
+      </h1>
 
-      <input
-        id="employee"
-        type="text"
-        [(ngModel)]="employeeName"
-        placeholder="Digite o nome do colaborador"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="startDate">Data de início</label>
-
-      <input
-        id="startDate"
-        type="date"
-        [(ngModel)]="startDate"
-        (change)="calculateDates()"
-      />
-    </div>
-
-    <div class="form-group">
-      <label>Quantidade de dias</label>
-
-      <div class="days-options">
-
-        <button
-          type="button"
-          [class.active]="vacationDays === 10"
-          (click)="selectDays(10)"
-        >
-          10 dias
-        </button>
-
-        <button
-          type="button"
-          [class.active]="vacationDays === 15"
-          (click)="selectDays(15)"
-        >
-          15 dias
-        </button>
-
-        <button
-          type="button"
-          [class.active]="vacationDays === 20"
-          (click)="selectDays(20)"
-        >
-          20 dias
-        </button>
-
-        <button
-          type="button"
-          [class.active]="vacationDays === 30"
-          (click)="selectDays(30)"
-        >
-          30 dias
-        </button>
-
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="customDays">Outra quantidade de dias</label>
-
-      <input
-        id="customDays"
-        type="number"
-        min="1"
-        [(ngModel)]="vacationDays"
-        (input)="calculateDates()"
-        placeholder="Digite a quantidade"
-      />
-    </div>
-
-    <div class="result-container">
-
-      <div class="result-card">
-        <span>FINAL DAS FÉRIAS</span>
-        <strong>
-          {{ finalDate || '--/--/----' }}
-        </strong>
-      </div>
-
-      <div class="result-card">
-        <span>RETORNO AO TRABALHO</span>
-        <strong class="return-date">
-          {{ returnDate || '--/--/----' }}
-        </strong>
-      </div>
+      <p>
+        Cadastre e organize um novo período de férias para um colaborador.
+      </p>
 
     </div>
 
-    <div class="actions">
+    <a
+      routerLink="/vacations"
+      class="back-button">
 
-      <button
-        type="button"
-        class="cancel-button"
-      >
-        Cancelar
-      </button>
+      ← Voltar para férias
 
-      <button
-        type="button"
-        class="save-button"
-        (click)="saveVacation()"
-      >
-        Salvar férias
-      </button>
-
-    </div>
+    </a>
 
   </div>
 
-</section>
+
+  <!-- CARD PRINCIPAL -->
+
+  <section class="vacation-card">
+
+    <!-- CABEÇALHO DO CARD -->
+
+    <div class="card-header">
+
+      <div class="card-icon">
+        🌴
+      </div>
+
+      <div>
+
+        <h2>
+          Informações das férias
+        </h2>
+
+        <p>
+          Defina o período e acompanhe as datas automaticamente.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- MENSAGEM DE ERRO -->
+
+    @if (errorMessage) {
+
+    <div class="alert-error">
+
+      ⚠️ {{ errorMessage }}
+
+    </div>
+
+    }
+
+
+    <!-- FORMULÁRIO -->
+
+    <form
+      [formGroup]="vacationForm"
+      (ngSubmit)="save()">
+
+
+      <!-- COLABORADOR -->
+
+      <div class="form-group">
+
+        <label for="employeeName">
+
+          👤 Nome do colaborador
+
+        </label>
+
+        <input
+          id="employeeName"
+          type="text"
+          formControlName="employeeName"
+          placeholder="Digite o nome do colaborador"
+        />
+
+        @if (hasError('employeeName')) {
+
+        <small class="field-error">
+
+          Informe o nome do colaborador.
+
+        </small>
+
+        }
+
+      </div>
+
+
+      <!-- DATA DE INÍCIO -->
+
+      <div class="form-group">
+
+        <label for="startDate">
+
+          📅 Data de início das férias
+
+        </label>
+
+        <input
+          id="startDate"
+          type="date"
+          formControlName="startDate"
+        />
+
+        @if (hasError('startDate')) {
+
+        <small class="field-error">
+
+          Informe a data de início.
+
+        </small>
+
+        }
+
+      </div>
+
+
+      <!-- OPÇÕES DE FÉRIAS -->
+
+      <div class="form-group">
+
+        <label>
+
+          🏖️ Período de férias
+
+        </label>
+
+        <p class="field-description">
+
+          Escolha a quantidade de dias acordada para as férias.
+
+        </p>
+
+
+        <div class="vacation-options">
+
+          @for (
+          option of vacationOptions;
+          track option
+          ) {
+
+          <button
+            type="button"
+            class="vacation-option"
+
+            [class.selected]="
+                selectedVacationDays === option
+              "
+
+            (click)="selectVacationDays(option)"
+
+            [disabled]="isLoading">
+
+            {{ option }} dias
+
+          </button>
+
+          }
+
+        </div>
+
+      </div>
+
+
+      <!-- DIAS ADICIONAIS -->
+
+      <div class="form-group additional-days">
+
+        <label for="additionalDays">
+
+          ➕ Dias adicionais
+
+        </label>
+
+        <p class="field-description">
+
+          Utilize este campo caso exista algum acordo entre a liderança e o colaborador.
+
+        </p>
+
+        <input
+          id="additionalDays"
+          type="number"
+          min="0"
+          formControlName="additionalDays"
+        />
+
+      </div>
+
+
+      <!-- RESUMO -->
+
+      <div class="vacation-summary">
+
+        <div class="summary-header">
+
+          <div>
+
+            <span class="summary-icon">
+              📋
+            </span>
+
+            <h3>
+              Resumo do período
+            </h3>
+
+          </div>
+
+        </div>
+
+
+        <div class="summary-grid">
+
+
+          <div class="summary-item">
+
+            <span class="summary-label">
+              Período escolhido
+            </span>
+
+            <strong>
+              {{ selectedVacationDays }} dias
+            </strong>
+
+          </div>
+
+
+          <div class="summary-item">
+
+            <span class="summary-label">
+              Dias adicionais
+            </span>
+
+            <strong>
+              + {{ additionalDays }} dias
+            </strong>
+
+          </div>
+
+
+          <div class="summary-item highlight">
+
+            <span class="summary-label">
+              Total de dias
+            </span>
+
+            <strong>
+              {{ totalDays }} dias
+            </strong>
+
+          </div>
+
+
+          <div class="summary-item">
+
+            <span class="summary-label">
+              📅 Fim das férias
+            </span>
+
+            <strong>
+
+              {{ finalDate || '--/--/----' }}
+
+            </strong>
+
+          </div>
+
+
+          <div class="summary-item return">
+
+            <span class="summary-label">
+              🏢 Retorno ao trabalho
+            </span>
+
+            <strong>
+
+              {{ returnDate || '--/--/----' }}
+
+            </strong>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- AÇÕES -->
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="btn-cancel"
+          (click)="cancel()"
+          [disabled]="isLoading">
+
+          Cancelar
+
+        </button>
+
+
+        <button
+          type="submit"
+          class="btn-primary"
+          [disabled]="isLoading">
+
+          @if (isLoading) {
+
+          <span class="button-loader"></span>
+
+          Salvando...
+
+          } @else {
+
+          💾 Salvar férias
+
+          }
+
+        </button>
+
+      </div>
+
+
+    </form>
+
+  </section>
+
+</div>

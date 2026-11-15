@@ -1,91 +1,116 @@
 <div class="app-layout">
+
+  <!-- MENU LATERAL -->
   <aside class="sidebar">
 
-    <div class="sidebar-brand">
-      <span class="brand-title">TEAM PULSE</span>
-      <span class="brand-subtitle">
-        Gerenciamento inteligente de equipes
-      </span>
+    <!-- LOGO -->
+    <div class="brand">
+
+      <div class="brand-icon">
+        ✦
+      </div>
+
+      <div class="brand-text">
+        <span>TEAM</span>
+        <strong>Pulse</strong>
+      </div>
+
     </div>
 
-    <nav class="sidebar-menu">
 
-      <!-- MENU PRINCIPAL -->
+    <!-- MENU -->
+    <nav class="menu">
 
-      <a class="menu-item" href="#">
-        Dashboard
-      </a>
-
-      <a class="menu-item" href="#">
-        Colaboradores
-      </a>
-
-      <a class="menu-item" href="#">
-        Equipes
-      </a>
+      <span class="menu-title">
+        GESTÃO
+      </span>
 
 
       <!-- FÉRIAS -->
+      <div class="menu-group">
 
-      <div class="menu-section">
+        <div class="menu-parent">
+          🌴 <span>Férias</span>
+        </div>
 
-        <span class="menu-section-title">
-          FÉRIAS
-        </span>
 
-        <a
-          class="submenu-item"
-          routerLink="/vacations"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          📋 Lista de férias
-        </a>
+        <div class="submenu">
 
-        <a
-          class="submenu-item"
-          routerLink="/vacations/new"
-          routerLinkActive="active"
-        >
-          ➕ Nova férias
-        </a>
+          <a
+            routerLink="/vacations"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+
+            📋 Lista de férias
+
+          </a>
+
+
+          <a
+            routerLink="/vacations/new"
+            routerLinkActive="active">
+
+            ➕ Nova férias
+
+          </a>
+
+        </div>
 
       </div>
 
 
-      <!-- FOLGAS -->
+      <!-- AUSÊNCIAS -->
+      <div class="menu-group">
 
-      <div class="menu-section">
+        <div class="menu-parent">
+          📅 <span>Ausências</span>
+        </div>
 
-        <span class="menu-section-title">
-          FOLGAS
-        </span>
 
-        <a
-          class="submenu-item"
-          routerLink="/time-off"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          📋 Lista de folgas
-        </a>
+        <div class="submenu">
 
-        <a
-          class="submenu-item"
-          routerLink="/time-off/new"
-          routerLinkActive="active"
-        >
-          ➕ Nova folga
-        </a>
+          <a
+            routerLink="/time-off"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }">
+
+            📋 Lista de ausências
+
+          </a>
+
+
+          <a
+            routerLink="/time-off/new"
+            routerLinkActive="active">
+
+            ➕ Nova ausência
+
+          </a>
+
+        </div>
 
       </div>
 
     </nav>
 
+
+    <!-- STATUS -->
+    <div class="sidebar-footer">
+
+      <span class="status-dot"></span>
+
+      Sistema online
+
+    </div>
+
   </aside>
 
 
-  <main class="main-content">
+  <!-- CONTEÚDO -->
+  <main class="content">
+
     <router-outlet></router-outlet>
+
   </main>
+
 </div>
