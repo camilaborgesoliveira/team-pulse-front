@@ -1,11 +1,17 @@
 <div class="app-layout">
   <aside class="sidebar">
+
     <div class="sidebar-brand">
       <span class="brand-title">TEAM PULSE</span>
-      <span class="brand-subtitle">Gerenciamento inteligente de equipes</span>
+      <span class="brand-subtitle">
+        Gerenciamento inteligente de equipes
+      </span>
     </div>
 
     <nav class="sidebar-menu">
+
+      <!-- MENU PRINCIPAL -->
+
       <a class="menu-item" href="#">
         Dashboard
       </a>
@@ -18,19 +24,66 @@
         Equipes
       </a>
 
+
+      <!-- FÉRIAS -->
+
       <div class="menu-section">
-        <span class="menu-section-title">Férias</span>
 
-        <a class="submenu-item" href="#">
-          Lista de férias
+        <span class="menu-section-title">
+          FÉRIAS
+        </span>
+
+        <a
+          class="submenu-item"
+          routerLink="/vacations"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          📋 Lista de férias
         </a>
 
-        <a class="submenu-item" href="#">
-          Nova férias
+        <a
+          class="submenu-item"
+          routerLink="/vacations/new"
+          routerLinkActive="active"
+        >
+          ➕ Nova férias
         </a>
+
       </div>
+
+
+      <!-- FOLGAS -->
+
+      <div class="menu-section">
+
+        <span class="menu-section-title">
+          FOLGAS
+        </span>
+
+        <a
+          class="submenu-item"
+          routerLink="/time-off"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          📋 Lista de folgas
+        </a>
+
+        <a
+          class="submenu-item"
+          routerLink="/time-off/new"
+          routerLinkActive="active"
+        >
+          ➕ Nova folga
+        </a>
+
+      </div>
+
     </nav>
+
   </aside>
+
 
   <main class="main-content">
     <router-outlet></router-outlet>

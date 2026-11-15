@@ -10,42 +10,69 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './vacation-form.css'
 })
 export class VacationForm {
+
   employeeName = '';
+
   startDate = '';
+
   vacationDays = 15;
 
   finalDate = '';
+
   returnDate = '';
+
 
   selectDays(days: number): void {
     this.vacationDays = days;
     this.calculateDates();
   }
 
+
   calculateDates(): void {
+
     if (!this.startDate || !this.vacationDays || this.vacationDays <= 0) {
       this.finalDate = '';
       this.returnDate = '';
       return;
     }
 
-    const start = new Date(`${this.startDate}T00:00:00`);
+    const parts = this.startDate.split('-');
+
+    const year = Number(parts[0]);
+    const month = Number(parts[1]) - 1;
+    const day = Number(parts[2]);
+
+    const start = new Date(year, month, day);
 
     const final = new Date(start);
+
+    // O primeiro dia das férias conta como dia 1
     final.setDate(start.getDate() + this.vacationDays - 1);
 
     const returnToWork = new Date(final);
+
+    // Retorna no dia seguinte ao último dia de férias
     returnToWork.setDate(final.getDate() + 1);
 
     this.finalDate = this.formatDate(final);
     this.returnDate = this.formatDate(returnToWork);
   }
 
+
   private formatDate(date: Date): string {
-    return date.toLocaleDateString('pt-BR');
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
   }
 
+
   saveVacation(): void {
+
+    this.calculateDates();
+
     if (!this.employeeName || !this.startDate || this.vacationDays <= 0) {
       alert('Preencha todos os campos corretamente.');
       return;

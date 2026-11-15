@@ -1,0 +1,68 @@
+<div class="time-off-page">
+
+  <div class="page-header">
+    <div>
+      <span class="section-label">TEAM PULSE</span>
+      <h1>Gestão de Folgas</h1>
+      <p>Acompanhe e gerencie as folgas da sua equipe.</p>
+    </div>
+
+    <button class="new-button">
+      + Nova folga
+    </button>
+  </div>
+
+  <div class="time-off-card">
+
+    <div class="card-header">
+      <h2>Folgas programadas</h2>
+
+      <span class="records-badge">
+        {{ timeOffs.length }} registros
+      </span>
+    </div>
+
+    <div class="table-container">
+
+      <table>
+        <thead>
+        <tr>
+          <th>COLABORADOR</th>
+          <th>INÍCIO</th>
+          <th>DIAS</th>
+          <th>FINAL DA FOLGA</th>
+          <th>RETORNO</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr *ngFor="let timeOff of timeOffs">
+          <td class="employee-name">
+            {{ timeOff.employee }}
+          </td>
+
+          <td>
+            {{ timeOff.startDate }}
+          </td>
+
+          <td>
+              <span class="days-badge">
+                {{ timeOff.days }} dias
+              </span>
+          </td>
+
+          <td>
+            {{ timeOff.endDate }}
+          </td>
+
+          <td class="return-date">
+            {{ timeOff.returnDate }}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+</div>

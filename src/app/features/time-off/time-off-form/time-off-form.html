@@ -1,0 +1,111 @@
+<section class="time-off-form-page">
+
+  <div class="page-header">
+    <div>
+      <span class="section-label">TEAM PULSE</span>
+
+      <h1>Nova Folga</h1>
+
+      <p>Cadastre uma nova folga para um colaborador.</p>
+    </div>
+  </div>
+
+  <div class="form-card">
+
+    <div class="form-group">
+      <label for="employeeName">Colaborador</label>
+
+      <input
+        id="employeeName"
+        type="text"
+        placeholder="Digite o nome do colaborador"
+        [(ngModel)]="employeeName"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="startDate">Data de início</label>
+
+      <input
+        id="startDate"
+        type="date"
+        [(ngModel)]="startDate"
+        (change)="calculateDates()"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Quantidade de dias</label>
+
+      <div class="days-options">
+
+        <button
+          type="button"
+          [class.active]="days === 1"
+          (click)="selectDays(1)"
+        >
+          1 dia
+        </button>
+
+        <button
+          type="button"
+          [class.active]="days === 2"
+          (click)="selectDays(2)"
+        >
+          2 dias
+        </button>
+
+        <button
+          type="button"
+          [class.active]="days === 3"
+          (click)="selectDays(3)"
+        >
+          3 dias
+        </button>
+
+        <button
+          type="button"
+          [class.active]="days === 5"
+          (click)="selectDays(5)"
+        >
+          5 dias
+        </button>
+
+      </div>
+
+      <input
+        class="custom-days"
+        type="number"
+        min="1"
+        placeholder="Ou digite outra quantidade de dias"
+        [(ngModel)]="days"
+        (input)="calculateDates()"
+      />
+
+    </div>
+
+    <div class="result-container">
+
+      <div class="result-card">
+        <span>FINAL DA FOLGA</span>
+        <strong>{{ endDate || '--/--/----' }}</strong>
+      </div>
+
+      <div class="result-card return-card">
+        <span>RETORNO AO TRABALHO</span>
+        <strong>{{ returnDate || '--/--/----' }}</strong>
+      </div>
+
+    </div>
+
+    <button
+      type="button"
+      class="save-button"
+      (click)="saveTimeOff()"
+    >
+      Salvar folga
+    </button>
+
+  </div>
+
+</section>
