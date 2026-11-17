@@ -1,68 +1,182 @@
 <div class="time-off-page">
 
   <div class="page-header">
+
     <div>
-      <span class="section-label">TEAM PULSE</span>
-      <h1>Gestão de Folgas</h1>
-      <p>Acompanhe e gerencie as folgas da sua equipe.</p>
+
+      <span class="section-label">
+        TEAM PULSE
+      </span>
+
+      <h1>
+        Gestão de Folgas
+      </h1>
+
+      <p>
+        Acompanhe e gerencie as folgas da sua equipe.
+      </p>
+
     </div>
 
-    <button class="new-button">
+    <button
+      class="new-button"
+      type="button"
+      (click)="goToNewTimeOff()">
+
       + Nova folga
+
     </button>
+
   </div>
+
+
+  <!-- NOTIFICAÇÕES -->
+
+  <div
+    *ngIf="!isLoading && notifications && notifications.length > 0"
+    class="notifications-container">
+
+    <div
+      *ngFor="let notification of notifications"
+      class="notification-card">
+
+      <span class="notification-icon">
+        🔔
+      </span>
+
+      <span class="notification-message">
+        {{ notification }}
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- CARD PRINCIPAL -->
 
   <div class="time-off-card">
 
     <div class="card-header">
-      <h2>Folgas programadas</h2>
+
+      <h2>
+        Folgas programadas
+      </h2>
 
       <span class="records-badge">
         {{ timeOffs.length }} registros
       </span>
+
     </div>
 
-    <div class="table-container">
+
+    <!-- CARREGANDO -->
+
+    <div
+      *ngIf="isLoading"
+      class="loading-message">
+
+      Carregando folgas...
+
+    </div>
+
+
+    <!-- ERRO -->
+
+    <div
+      *ngIf="!isLoading && errorMessage"
+      class="error-message">
+
+      {{ errorMessage }}
+
+    </div>
+
+
+    <!-- TABELA -->
+
+    <div
+      *ngIf="!isLoading && !errorMessage && timeOffs.length > 0"
+      class="table-container">
 
       <table>
+
         <thead>
+
         <tr>
+
           <th>COLABORADOR</th>
           <th>INÍCIO</th>
           <th>DIAS</th>
           <th>FINAL DA FOLGA</th>
           <th>RETORNO</th>
+
         </tr>
+
         </thead>
 
+
         <tbody>
-        <tr *ngFor="let timeOff of timeOffs">
+
+        <tr
+          *ngFor="let timeOff of timeOffs">
+
           <td class="employee-name">
-            {{ timeOff.employee }}
+
+            {{ timeOff.employeeName }}
+
           </td>
 
-          <td>
-            {{ timeOff.startDate }}
-          </td>
 
           <td>
+
+            {{ formatDate(timeOff.startDate) }}
+
+          </td>
+
+
+          <td>
+
               <span class="days-badge">
+
                 {{ timeOff.days }} dias
+
               </span>
+
           </td>
 
+
           <td>
-            {{ timeOff.endDate }}
+
+            {{ formatDate(timeOff.finalDate) }}
+
           </td>
+
 
           <td class="return-date">
-            {{ timeOff.returnDate }}
+
+            {{ formatDate(timeOff.returnDate) }}
+
           </td>
+
         </tr>
+
         </tbody>
+
       </table>
 
     </div>
+
+
+    <!-- LISTA VAZIA -->
+
+    <div
+      *ngIf="!isLoading && !errorMessage && timeOffs.length === 0"
+      class="empty-message">
+
+      Nenhuma folga cadastrada.
+
+    </div>
+
   </div>
 
 </div>

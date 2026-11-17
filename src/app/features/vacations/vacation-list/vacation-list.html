@@ -22,7 +22,6 @@
 
     </div>
 
-
     <a
       routerLink="/vacations/new"
       class="primary-button">
@@ -39,11 +38,42 @@
 
 
   <!-- =========================
+       ALERTAS DE FÉRIAS
+  ========================== -->
+
+  @if (!isLoading && getVacationAlerts().length > 0) {
+
+  <section class="vacation-alerts">
+
+    @for (
+    vacation of getVacationAlerts();
+    track vacation.id
+    ) {
+
+    <div class="vacation-alert">
+
+          <span class="alert-icon">
+            🔔
+          </span>
+
+      <span class="alert-message">
+            {{ getAlertMessage(vacation) }}
+          </span>
+
+    </div>
+
+    }
+
+  </section>
+
+  }
+
+
+  <!-- =========================
        CARD PRINCIPAL
   ========================== -->
 
   <section class="vacation-card">
-
 
     <!-- CABEÇALHO DO CARD -->
 
@@ -217,7 +247,10 @@
 
         <tbody>
 
-        @for (vacation of vacations; track vacation.id) {
+        @for (
+        vacation of vacations;
+        track vacation.id
+        ) {
 
         <tr>
 
@@ -232,7 +265,6 @@
                 {{ getInitials(vacation.employeeName) }}
 
               </div>
-
 
               <div class="employee-info">
 
@@ -282,7 +314,17 @@
 
           <td class="return-date">
 
+            @if (isReturningToday(vacation)) {
+
+            <span>
+      Retorno hoje
+    </span>
+
+            } @else {
+
             {{ formatDate(vacation.returnDate) }}
+
+            }
 
           </td>
 

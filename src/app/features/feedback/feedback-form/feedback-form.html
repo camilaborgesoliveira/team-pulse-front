@@ -1,0 +1,202 @@
+<div class="feedback-form-page">
+
+  <div class="page-header">
+
+    <div>
+
+      <span class="section-label">
+        TEAM PULSE
+      </span>
+
+      <h1>
+        Novo Feedback 1:1
+      </h1>
+
+      <p>
+        Registre os principais pontos conversados com o colaborador.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="feedback-card">
+
+    <h2>
+      Informações do feedback
+    </h2>
+
+
+    <!-- COLABORADOR -->
+
+    <div class="form-group">
+
+      <label for="employeeName">
+        Colaborador
+      </label>
+
+      <input
+        id="employeeName"
+        type="text"
+        name="employeeName"
+        [(ngModel)]="feedback.employeeName"
+        placeholder="Digite o nome do colaborador"
+        required>
+
+    </div>
+
+
+    <!-- DATA -->
+
+    <div class="form-group">
+
+      <label for="feedbackDate">
+        Data do feedback
+      </label>
+
+      <input
+        id="feedbackDate"
+        type="date"
+        name="feedbackDate"
+        [(ngModel)]="feedback.feedbackDate"
+        required>
+
+    </div>
+
+
+    <!-- PONTOS POSITIVOS -->
+
+    <div class="form-group">
+
+      <label for="positivePoints">
+        Pontos positivos
+      </label>
+
+      <textarea
+        id="positivePoints"
+        name="positivePoints"
+        [(ngModel)]="feedback.positivePoints"
+        placeholder="Registre os pontos positivos discutidos no feedback"
+        required></textarea>
+
+    </div>
+
+
+    <!-- PONTOS DE MELHORIA -->
+
+    <div class="form-group">
+
+      <label for="improvementPoints">
+        Pontos de melhoria
+      </label>
+
+      <textarea
+        id="improvementPoints"
+        name="improvementPoints"
+        [(ngModel)]="feedback.improvementPoints"
+        placeholder="Registre os pontos que precisam ser melhorados"
+        required></textarea>
+
+    </div>
+
+
+    <!-- O QUE FOI CONVERSADO -->
+
+    <div class="form-group">
+
+      <label for="discussionNotes">
+        O que foi conversado
+      </label>
+
+      <textarea
+        id="discussionNotes"
+        name="discussionNotes"
+        [(ngModel)]="feedback.discussionNotes"
+        placeholder="Registre os principais assuntos conversados durante o 1:1"
+        required></textarea>
+
+    </div>
+
+
+    <!-- PRÓXIMO FEEDBACK -->
+
+    <div class="form-group">
+
+      <label for="nextFeedbackNotes">
+        Pontos para o próximo feedback
+      </label>
+
+      <textarea
+        id="nextFeedbackNotes"
+        name="nextFeedbackNotes"
+        [(ngModel)]="feedback.nextFeedbackNotes"
+        placeholder="Registre os pontos que devem ser acompanhados no próximo 1:1"
+        required></textarea>
+
+    </div>
+
+
+    <!-- NOTA -->
+
+    <div class="form-group">
+
+      <label for="score">
+        Nota de evolução (0 a 10)
+      </label>
+
+      <input
+        id="score"
+        type="number"
+        name="score"
+        [(ngModel)]="feedback.score"
+        min="0"
+        max="10"
+        step="1"
+        placeholder="Exemplo: 8"
+        required>
+
+    </div>
+
+
+    <!-- MENSAGEM DE ERRO -->
+
+    <p
+      *ngIf="errorMessage"
+      class="error-message">
+
+      {{ errorMessage }}
+
+    </p>
+
+
+    <!-- AÇÕES -->
+
+    <div class="form-actions">
+
+      <button
+        type="button"
+        class="cancel-button"
+        (click)="cancel()"
+        [disabled]="isSaving">
+
+        Cancelar
+
+      </button>
+
+
+      <button
+        type="button"
+        class="save-button"
+        (click)="saveFeedback()"
+        [disabled]="isSaving">
+
+        {{ isSaving ? 'Salvando...' : 'Salvar feedback' }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
