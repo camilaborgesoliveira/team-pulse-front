@@ -1,0 +1,345 @@
+<div class="page">
+
+  <!-- =========================
+       CABEÇALHO
+  ========================== -->
+
+  <div class="page-header">
+
+    <div class="page-title">
+
+      <span class="eyebrow">
+        🌴 GESTÃO DE PESSOAS
+      </span>
+
+      <h1>
+        Gestão de Férias
+      </h1>
+
+      <p>
+        Acompanhe, organize e gerencie as férias da sua equipe.
+      </p>
+
+    </div>
+
+    <a
+      routerLink="/vacations/new"
+      class="primary-button">
+
+      <span class="button-icon">
+        ＋
+      </span>
+
+      Nova férias
+
+    </a>
+
+  </div>
+
+
+  <!-- =========================
+       ALERTAS DE FÉRIAS
+  ========================== -->
+
+  @if (!isLoading && getVacationAlerts().length > 0) {
+
+  <section class="vacation-alerts">
+
+    @for (
+    vacation of getVacationAlerts();
+    track vacation.id
+    ) {
+
+    <div class="vacation-alert">
+
+          <span class="alert-icon">
+            🔔
+          </span>
+
+      <span class="alert-message">
+            {{ getAlertMessage(vacation) }}
+          </span>
+
+    </div>
+
+    }
+
+  </section>
+
+  }
+
+
+  <!-- =========================
+       CARD PRINCIPAL
+  ========================== -->
+
+  <section class="vacation-card">
+
+    <!-- CABEÇALHO DO CARD -->
+
+    <div class="card-header">
+
+      <div>
+
+        <h2>
+          Férias programadas
+        </h2>
+
+        <p>
+          Acompanhe os períodos cadastrados para sua equipe.
+        </p>
+
+      </div>
+
+
+      <div class="card-actions">
+
+        <span class="records-count">
+
+          <strong>
+            {{ vacations.length }}
+          </strong>
+
+          registros
+
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         CARREGANDO
+    ========================== -->
+
+    @if (isLoading) {
+
+    <div class="state-message loading">
+
+      <div class="loader"></div>
+
+      <span>
+          Carregando férias...
+        </span>
+
+    </div>
+
+    }
+
+
+    <!-- =========================
+         ERRO
+    ========================== -->
+
+    @if (!isLoading && errorMessage) {
+
+    <div class="state-message error">
+
+      <div class="state-icon">
+        ⚠️
+      </div>
+
+      <div>
+
+        <strong>
+          Ops! Algo deu errado.
+        </strong>
+
+        <p>
+          {{ errorMessage }}
+        </p>
+
+      </div>
+
+      <button
+        type="button"
+        (click)="loadVacations()">
+
+        Tentar novamente
+
+      </button>
+
+    </div>
+
+    }
+
+
+    <!-- =========================
+         LISTA VAZIA
+    ========================== -->
+
+    @if (
+    !isLoading &&
+    !errorMessage &&
+    vacations.length === 0
+    ) {
+
+    <div class="state-message empty">
+
+      <div class="empty-icon">
+        🌴
+      </div>
+
+      <h3>
+        Nenhuma férias cadastrada
+      </h3>
+
+      <p>
+        Comece cadastrando o primeiro período de férias.
+      </p>
+
+      <a
+        routerLink="/vacations/new"
+        class="primary-button">
+
+        ＋ Nova férias
+
+      </a>
+
+    </div>
+
+    }
+
+
+    <!-- =========================
+         TABELA
+    ========================== -->
+
+    @if (
+    !isLoading &&
+    !errorMessage &&
+    vacations.length > 0
+    ) {
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+        <tr>
+
+          <th>
+            COLABORADOR
+          </th>
+
+          <th>
+            INÍCIO
+          </th>
+
+          <th>
+            DIAS
+          </th>
+
+          <th>
+            FINAL DAS FÉRIAS
+          </th>
+
+          <th>
+            RETORNO
+          </th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        @for (
+        vacation of vacations;
+        track vacation.id
+        ) {
+
+        <tr>
+
+          <!-- COLABORADOR -->
+
+          <td>
+
+            <div class="employee">
+
+              <div class="avatar">
+
+                {{ getInitials(vacation.employeeName) }}
+
+              </div>
+
+              <div class="employee-info">
+
+                <strong>
+                  {{ vacation.employeeName }}
+                </strong>
+
+              </div>
+
+            </div>
+
+          </td>
+
+
+          <!-- INÍCIO -->
+
+          <td>
+
+            {{ formatDate(vacation.startDate) }}
+
+          </td>
+
+
+          <!-- DIAS -->
+
+          <td>
+
+                  <span class="days-badge">
+
+                    {{ vacation.vacationDays }} dias
+
+                  </span>
+
+          </td>
+
+
+          <!-- FINAL DAS FÉRIAS -->
+
+          <td>
+
+            {{ formatDate(vacation.finalDate) }}
+
+          </td>
+
+
+          <!-- RETORNO -->
+
+          <td class="return-date">
+
+            @if (isReturningToday(vacation)) {
+
+            <span>
+      Retorno hoje
+    </span>
+
+            } @else {
+
+            {{ formatDate(vacation.returnDate) }}
+
+            }
+
+          </td>
+
+        </tr>
+
+        }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    }
+
+  </section>
+
+</div>

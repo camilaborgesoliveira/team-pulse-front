@@ -1,0 +1,218 @@
+.time-off-form-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 32px;
+  color: #f5f5f5;
+}
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+.section-label {
+  display: block;
+  margin-bottom: 10px;
+
+  color: #00a8e8;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+h1 {
+  margin: 0;
+
+  font-size: 36px;
+  font-weight: 700;
+
+  color: #ffffff;
+}
+
+.page-header p {
+  margin-top: 10px;
+
+  color: #a7adb8;
+
+  font-size: 16px;
+}
+
+.form-card {
+  max-width: 850px;
+
+  padding: 28px;
+
+  background: #171b23;
+
+  border: 1px solid #2a303b;
+  border-radius: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 24px;
+}
+
+label {
+  margin-bottom: 8px;
+
+  color: #d9dde5;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 13px 14px;
+
+  background: #0f1117;
+
+  border: 1px solid #2a303b;
+  border-radius: 8px;
+
+  color: #ffffff;
+
+  font-size: 15px;
+}
+
+input:focus {
+  outline: none;
+
+  border-color: #00a8e8;
+}
+
+.days-options {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-bottom: 14px;
+}
+
+.days-options button {
+  padding: 10px 16px;
+
+  background: #1e2530;
+
+  border: 1px solid #2d3745;
+  border-radius: 8px;
+
+  color: #d9dde5;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.days-options button:hover {
+  border-color: #00a8e8;
+
+  color: #00a8e8;
+}
+
+.days-options button.active {
+  background: #003b5c;
+
+  border-color: #00a8e8;
+
+  color: #00a8e8;
+
+  font-weight: 700;
+}
+
+.custom-days {
+  margin-top: 4px;
+}
+
+.result-container {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 16px;
+
+  margin: 30px 0;
+}
+
+.result-card {
+  padding: 20px;
+
+  background: #0f1117;
+
+  border: 1px solid #2a303b;
+  border-radius: 10px;
+}
+
+.result-card span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #8d96a5;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+.result-card strong {
+  color: #ffffff;
+
+  font-size: 22px;
+}
+
+.return-card {
+  border-color: #005a87;
+}
+
+.return-card strong {
+  color: #00a8e8;
+}
+
+.save-button {
+  width: 100%;
+
+  padding: 14px;
+
+  background: #008ee6;
+
+  border: 1px solid #008ee6;
+  border-radius: 8px;
+
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.save-button:hover {
+  background: #00a8e8;
+}
+
+@media (max-width: 700px) {
+
+  .time-off-form-page {
+    padding: 20px;
+  }
+
+  .result-container {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+}
